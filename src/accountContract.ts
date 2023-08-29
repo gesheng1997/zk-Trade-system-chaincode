@@ -9,7 +9,6 @@ import {Account} from './account';
 import userType from './constant/userType';
 import { STR_NONE, BALANCE_UNCHANGE } from './constant/chaincodeConst';
 const snarkjs = require('snarkjs');
-import { TransactionContract } from './transactionContract';
 import { ChaincodeResponse } from 'fabric-shim-api';
 
 // const adminToken = 'WoAiNiLuWenJun';
@@ -193,7 +192,7 @@ export class AccountContract extends Contract {
 //#############################################################交易相关的方法#############################################################
 
     @Transaction()
-    public async zkVerifier(ctx: Context, zkProofStr:string): Promise<string> {
+    public async zkVerifier(ctx: Context, zkProofStr:string): Promise<boolean> {
         const zkProof = JSON.parse(zkProofStr);
         const { ids, finalBalances, vkey, publicSignals,proof } = zkProof;
 
@@ -203,24 +202,24 @@ export class AccountContract extends Contract {
         
         const res = await this.BatchUpdateBalance(ctx,ids,finalBalances);
 
-        const mspId = ctx.stub.getMspID();
-        const createTime = ctx.stub.getDateTimestamp();
-        const transactionId = ctx.stub.getTxID(); 
-        const channelId = ctx.stub.getChannelID();       
+        // const mspId = ctx.stub.getMspID();
+        // const createTime = ctx.stub.getDateTimestamp();
+        // const transactionId = ctx.stub.getTxID(); 
+        // const channelId = ctx.stub.getChannelID();       
 
-        let result:ChaincodeResponse;
-        if(res){
-            const result = await ctx.stub.invokeChaincode('TransactionContract',[
-                transactionId,
-                mspId,
-                channelId,
-                createTime,
-                ids,
-                finalBalances,
-            ],channelId);
-        }
+        // let result:ChaincodeResponse;
+        // if(res){
+        //     const result = await ctx.stub.invokeChaincode('TransactionContract',[
+        //         transactionId,
+        //         mspId,
+        //         channelId,
+        //         createTime,
+        //         ids,
+        //         finalBalances,
+        //     ],channelId);
+        // }
 
-        return JSON.stringify(result);
+        return res;
     }
 
     // GetAllAssets returns all assets found in the world state.
