@@ -8,7 +8,7 @@ import sortKeysRecursive from 'sort-keys-recursive';
 import {Account} from './account';
 import userType from './constant/userType';
 import { STR_NONE, BALANCE_UNCHANGE } from './constant/chaincodeConst';
-import snarkjs from 'snarkjs';
+const snarkjs = require('snarkjs');
 import { TransactionContract } from './transactionContract';
 import { ChaincodeResponse } from 'fabric-shim-api';
 
